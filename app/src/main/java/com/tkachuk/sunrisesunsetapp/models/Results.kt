@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 //Get only properties which we use
 @JsonIgnoreProperties(ignoreUnknown = true)
-class SunriseSunset {
-    lateinit var results: Results
-    lateinit var status: String
+class Results {
+    lateinit var sunrise: String
+    lateinit var sunset: String
 
     override fun toString(): String {
-        return "SunriseSunset(status='$status')"
+        return "Results(sunrise='$sunrise', sunset='$sunset')"
     }
 }
