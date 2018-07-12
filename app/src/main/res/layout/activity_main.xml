@@ -7,10 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <SearchView
+    <fragment
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -19,18 +20,6 @@
         app:layout_constraintEnd_toStartOf="@+id/iv_get_my_location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/iv_get_my_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@mipmap/ic_my_location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/my_location_image" />
 
     <TextView
         android:id="@+id/tv_result_city"
