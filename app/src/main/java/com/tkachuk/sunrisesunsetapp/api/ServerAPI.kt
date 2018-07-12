@@ -10,6 +10,6 @@ interface ServerAPI {
     //Get sunset and sunrise based on latitude and longitude
     //Deferred - for works with Coroutine
     @GET("json")
-    fun loadData(@Query ("lat") lat: Float, @Query ("lng") lng: Float, @Query("date") date: String)
+    fun loadData(@Query ("lat") lat: Double, @Query ("lng") lng: Double, @Query("date") date: String)
             : Deferred<SunriseSunset>
 }
