@@ -33,4 +33,7 @@ dependencies {
 
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+
+    //for converting Json file
+    implementation 'com.squareup.retrofit2:converter-jackson:2.4.0'
 }
