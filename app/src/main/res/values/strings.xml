@@ -3,4 +3,5 @@
     <string name="sunrise_image">sunrise_image</string>
     <string name="sunset_image">sunset_image</string>
     <string name="my_location_image">my_location_image</string>
+    <string name="description_to_tv">Sunset and sunrise in %1$s</string>
 </resources>
