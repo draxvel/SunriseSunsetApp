@@ -15,7 +15,7 @@ class SunriseSunsetData : ISunriseSunsetData{
                 ss.results.sunset = UTCIntoLocalTime.intoLocalTime(ss.results.sunset)
                 getSunriseSunsetCallBack.onGet(ss)
             } catch (text: Exception) {
-                getSunriseSunsetCallBack.onError(text.toString())
+                getSunriseSunsetCallBack.onError("Check Internet connection")
             }
         }
     }
