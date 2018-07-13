@@ -1,11 +1,11 @@
 # SunriseSunsetApp
 
-Using [REST API](https://sunrise-sunset.org/api) and Google Places API.
+Using [API](https://sunrise-sunset.org/api) and Google Places API.
 
 ## Project description
 Implemeted use-cases:
-User can view the sunrise/sunset information for his current location
-User can view search for any city and view the sunrise/sunset information for this city
+* User can view the sunrise/sunset information for his current location
+* User can view search for any city and view the sunrise/sunset information for this city
 
 ## Screenshots:
 Search | Search fragment | Info for current location
