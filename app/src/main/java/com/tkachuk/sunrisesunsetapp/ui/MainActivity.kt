@@ -1,28 +1,26 @@
-package com.tkachuk.sunrisesunsetapp
+package com.tkachuk.sunrisesunsetapp.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.google.android.gms.common.api.Status
-import com.tkachuk.sunrisesunsetapp.models.SunriseSunset
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
 import com.google.android.gms.location.places.AutocompleteFilter
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
-import com.tkachuk.sunrisesunsetapp.data.ISunriseSunsetData
-import com.tkachuk.sunrisesunsetapp.data.SunriseSunsetData
+import com.tkachuk.sunrisesunsetapp.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IMainContract.IMainActivity {
 
-    private lateinit var sunriseSunsetData: SunriseSunsetData
+    lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        sunriseSunsetData = SunriseSunsetData()
 
         setAutoComplete()
     }
@@ -32,8 +30,30 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if(item.itemId == R.id.item_get_my_location){
+            presenter.getDataForCurrentLocation()
+            true
+        }else super.onOptionsItemSelected(item)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter = MainPresenter(this)
+    }
+
+    override fun setDataToUI(sunrise: String, sunset: String) {
+        tv_sunrise.text = sunrise
+        tv_sunset.text = sunset
+    }
+
+    override fun setCityToUI(cityName: String) {
+        tv_result_city.text = getString(R.string.description_to_tv, cityName)
+    }
+
     private fun setAutoComplete(){
-        val autocompleteFragment: PlaceAutocompleteFragment = fragmentManager.findFragmentById(R.id.searchView) as PlaceAutocompleteFragment
+        val autocompleteFragment: PlaceAutocompleteFragment = fragmentManager.findFragmentById(R.id.searchView)
+                as PlaceAutocompleteFragment
 
         val typeFilter = AutocompleteFilter.Builder()
                 .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
@@ -42,20 +62,8 @@ class MainActivity : AppCompatActivity() {
 
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-
-                tv_result_city.text = getString(R.string.description_to_tv, place.name)
-
-                sunriseSunsetData.getSunriseSunset(place.latLng.latitude, place.latLng.longitude, "today",
-                        getSunriseSunsetCallBack = object: ISunriseSunsetData.GetSunriseSunsetCallBack{
-                            override fun onGet(ss: SunriseSunset) {
-                                tv_sunrise.text = ss.results.sunrise
-                                tv_sunset.text = ss.results.sunset
-                            }
-
-                            override fun onError(error: String) {
-                                showMsg(error)
-                            }
-                        } )
+                setCityToUI(place.name.toString())
+                presenter.getData(place.latLng)
             }
 
             override fun onError(p0: Status?) {
@@ -64,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun showMsg(str: String){
+    override fun showMsg(str: String){
         Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT).show()
     }
 }
